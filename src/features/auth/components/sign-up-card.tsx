@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-// import { FaLinkedin } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
 import { TriangleAlert } from "lucide-react";
-
-import { useAuthActions } from "@convex-dev/auth/react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -22,8 +20,7 @@ interface SignUpCardProps {
 }
 
 export const SignUpCard = ({ setState }: SignUpCardProps) => {
-  const { signIn } = useAuthActions();
-
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -37,20 +34,9 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
       setError("Passwords do not match");
       return;
     }
-
-    setPending(true);
-    signIn("password", { email, password, flow: "signUp" })
-      .catch((error) => {
-        setError("Something went wrong");
-      })
-
-      .finally(() => setPending(false));
   };
 
-  const handleProviderSignUp = (value: "google") => {
-    setPending(true);
-    signIn(value).finally(() => setPending(false));
-  };
+  const handleProviderSignUp = () => {};
 
   return (
     <Card className="w-full h-full p-8 ">
@@ -68,6 +54,13 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
       )}
       <CardContent className="space-y-5 px-0 pb-0">
         <form onSubmit={onPasswordSignIn} className="space-y-2.5">
+          <Input
+            disabled={pending}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Full name"
+            required
+          />
           <Input
             disabled={pending}
             value={email}
@@ -100,7 +93,7 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
         <div className="flex flex-col gap-y-2.5">
           <Button
             disabled={pending}
-            onClick={() => handleProviderSignUp("google")}
+            onClick={() => handleProviderSignUp()}
             variant="outline"
             size="lg"
             className="w-full relative"
@@ -108,7 +101,7 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
             <FcGoogle className="size-5 absolute top-2.5 left-2.5" />
             Continue with Google
           </Button>
-          {/* <Button
+          <Button
             disabled={pending}
             onClick={() => {}}
             variant="outline"
@@ -117,7 +110,7 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
           >
             <FaLinkedin className="size-5 text-blue-500 absolute top-2.5 left-2.5" />
             Continue with LinkedIn
-          </Button> */}
+          </Button>
         </div>
         <p className="text-xs text-muted-foreground">
           Don&apos;t have an account?{" "}

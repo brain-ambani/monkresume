@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { TriangleAlert } from "lucide-react";
-
-// import { FaLinkedin } from "react-icons/fa";
-import { useAuthActions } from "@convex-dev/auth/react";
+import { FaLinkedin } from "react-icons/fa";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -22,29 +20,14 @@ interface SignInCardProps {
 }
 
 export const SignIncard = ({ setState }: SignInCardProps) => {
-  const { signIn } = useAuthActions();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
 
-  const onPasswordSignIn = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onPasswordSignIn = (e: { preventDefault: () => void }) => {};
 
-    setPending(true);
-    signIn("password", { email, password, flow: "signIn" })
-      .catch((error) => {
-        setError("Invalid email or password");
-      })
-
-      .finally(() => setPending(false));
-  };
-
-  const handleProviderSignIn = (value: "google") => {
-    setPending(true);
-    signIn(value).finally(() => setPending(false));
-  };
+  const handleProviderSignIn = () => {};
 
   return (
     <Card className="w-full h-full p-8 ">
@@ -86,7 +69,7 @@ export const SignIncard = ({ setState }: SignInCardProps) => {
         <div className="flex flex-col gap-y-2.5">
           <Button
             disabled={pending}
-            onClick={() => handleProviderSignIn("google")}
+            onClick={() => handleProviderSignIn()}
             variant="outline"
             size="lg"
             className="w-full relative"
@@ -94,7 +77,7 @@ export const SignIncard = ({ setState }: SignInCardProps) => {
             <FcGoogle className="size-5 absolute top-2.5 left-2.5" />
             Continue with Google
           </Button>
-          {/* <Button
+          <Button
             disabled={false}
             onClick={() => {}}
             variant="outline"
@@ -103,7 +86,7 @@ export const SignIncard = ({ setState }: SignInCardProps) => {
           >
             <FaLinkedin className="size-5 text-blue-500 absolute top-2.5 left-2.5" />
             Continue with LinkedIn
-          </Button> */}
+          </Button>
         </div>
         <p className="text-xs text-muted-foreground">
           Don&apos;t have an account?{" "}

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-
+import Header from "@/components/nav";
 
 
 export const metadata: Metadata = {
@@ -17,6 +17,9 @@ export default function RootLayout({
    
     <html>
       <body>
+        <div>
+          <Header/>
+        </div>
         {children}
       
         

@@ -7,7 +7,7 @@ import { CheckUser } from "@/lib/checkUser";
 export default async function Header() {
   const user = await CheckUser();
   return (
-    <div className="flex justify-between shadow-sm p-5">
+    <div className="flex justify-between shadow-sm p-5 sm:px-16 lg:px-44">
       <Link href="/dashboard" className="text-2xl">
         Monk<span className="text-indigo-600">Resume</span>
       </Link>

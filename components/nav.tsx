@@ -2,8 +2,10 @@ import { SignedIn, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { FilePlus2 } from "lucide-react";
+import { CheckUser } from "@/lib/checkUser";
 
-export default function Header() {
+export default async function Header() {
+  const user = await CheckUser();
   return (
     <div className="flex justify-between shadow-sm p-5">
       <Link href="/dashboard" className="text-2xl">

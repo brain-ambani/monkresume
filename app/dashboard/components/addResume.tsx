@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Loader2, PlusSquare } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 import {
   Dialog,
@@ -19,12 +20,15 @@ export const AddResume = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [resumeTitle, setResumeTitle] = useState('');
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const onCreate = async () => {
     setLoading(true);
 
     try {
-      await createResume(resumeTitle);
+      const resumeId = await createResume(resumeTitle);
+
+      router.push(`/dashboard/resume/${resumeId}/edit`);
       setOpenDialog(false);
       setResumeTitle('');
     } catch (error) {

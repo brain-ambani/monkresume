@@ -23,5 +23,5 @@ export async function createResume(title: string) {
     },
   });
 
-  return resume;
+  return resume.resumeId;
 }

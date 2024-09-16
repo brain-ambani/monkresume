@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { PlusSquare } from 'lucide-react';
+import { Loader2, PlusSquare } from 'lucide-react';
 
 import {
   Dialog,
@@ -13,9 +13,26 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { createResume } from '@/app/actions/createResumeAction';
 
 export const AddResume = () => {
   const [openDialog, setOpenDialog] = useState(false);
+  const [resumeTitle, setResumeTitle] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const onCreate = async () => {
+    setLoading(true);
+
+    try {
+      await createResume(resumeTitle);
+      setOpenDialog(false);
+      setResumeTitle('');
+    } catch (error) {
+      console.error('Failed to create resume:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div>
@@ -36,6 +53,8 @@ export const AddResume = () => {
               <Input
                 className='my-2'
                 placeholder='Ex. Fullstack Resume'
+                value={resumeTitle}
+                onChange={(e) => setResumeTitle(e.target.value)}
               />
             </DialogDescription>
             <div className='flex justify-end gap-4'>
@@ -47,7 +66,12 @@ export const AddResume = () => {
               >
                 Cancel
               </Button>
-              <Button>Create</Button>
+              <Button
+                onClick={onCreate}
+                disabled={!resumeTitle || loading}
+              >
+                {loading ? <Loader2 className='animate-spin' /> : 'Create'}
+              </Button>
             </div>
           </DialogHeader>
         </DialogContent>

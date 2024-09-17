@@ -2,6 +2,7 @@
 
 import { db } from '@/lib/db';
 import { currentUser } from '@clerk/nextjs/server';
+import { revalidatePath } from 'next/cache';
 
 export async function createResume(title: string) {
   const user = await currentUser();
@@ -22,6 +23,8 @@ export async function createResume(title: string) {
       userId,
     },
   });
+
+  revalidatePath('/dashboard');
 
   return resume.resumeId;
 }

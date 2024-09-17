@@ -1,4 +1,6 @@
 import { db } from '@/lib/db';
+import { FormSection } from '@/app/dashboard/resume/components/FormSection';
+import { ResumePreview } from '@/app/dashboard/resume/components/ResumePreview';
 
 export default async function EditResume({
   params,
@@ -13,9 +15,14 @@ export default async function EditResume({
   if (!resume) {
     return 'resume not found';
   }
+
   return (
-    <div>
-      <h1>Edit resume {resume.title}</h1>
+    <div className='grid grid-cols-1 md:grid-cols-2 p-10 gap-10'>
+      {/* Form Section */}
+      <FormSection />
+
+      {/* Preview section */}
+      <ResumePreview />
     </div>
   );
 }

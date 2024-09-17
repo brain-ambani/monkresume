@@ -41,8 +41,8 @@ export const AddResume = () => {
   return (
     <div>
       <div
-        className='p-14 py-28  sm:gap-10 border flex items-center justify-center 
-      bg-gray-200 rounded-lg sm:h-[280px] lg:h-[320px] hover:scale-105 transition-all
+        className='p-14  sm:gap-10 border flex items-center justify-center 
+      bg-gray-200 rounded-lg h-[180px] sm:h-[280px] lg:h-[320px] hover:scale-105 transition-all
       hover:shadow-md hover:bg-gray-500 hover:text-slate-100 hover:cursor-pointer'
         onClick={() => setOpenDialog(true)}
       >

@@ -1,28 +1,29 @@
-import { db } from '@/lib/db';
+'use client';
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+
 import { FormSection } from '@/app/dashboard/resume/components/FormSection';
-import { ResumePreview } from '@/app/dashboard/resume/components/ResumePreview';
+import ResumePreview from '@/app/dashboard/resume/components/ResumePreview';
+import { ResumeInfoContext } from '@/context/ResumeInfoContext';
+import dummy from '@/data/dummy';
+import { ResumeInfo } from '@/lib/types';
 
-export default async function EditResume({
-  params,
-}: {
-  params: { resumeId: string };
-}) {
-  const resume = await db.resume.findUnique({
-    where: {
-      resumeId: params.resumeId,
-    },
-  });
-  if (!resume) {
-    return 'resume not found';
-  }
+export default function EditResume() {
+  const params = useParams();
 
+  const [resumeInfo, setResumeInfo] = useState<ResumeInfo | null>();
+
+  useEffect(() => {
+    setResumeInfo(dummy);
+  }, []);
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2 p-10 gap-10'>
-      {/* Form Section */}
-      <FormSection />
-
-      {/* Preview section */}
-      <ResumePreview />
-    </div>
+    <ResumeInfoContext.Provider value={{ resumeInfo, setResumeInfo }}>
+      <div className='grid grid-cols-1 md:grid-cols-2 p-10 gap-10'>
+        {/* Form section */}
+        <FormSection />
+        {/* Preview section */}
+        <ResumePreview />
+      </div>
+    </ResumeInfoContext.Provider>
   );
 }

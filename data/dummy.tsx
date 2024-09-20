@@ -48,10 +48,10 @@ export default {
   education: [
     {
       id: 1,
-      universityName: 'Western Illinois University',
+      universityName: 'Mount Kenya University',
       startDate: 'Aug 2018',
       endDate: 'Dec:2019',
-      degree: 'Master',
+      degree: 'Degree',
       major: 'Computer Science',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud',
@@ -59,9 +59,9 @@ export default {
     {
       id: 2,
       universityName: 'Western Illinois University',
-      startDate: 'Aug 2018',
-      endDate: 'Dec:2019',
-      degree: 'Master',
+      startDate: 'Aug 2022',
+      endDate: 'Dec:2025',
+      degree: 'Masters',
       major: 'Computer Science',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud',
@@ -70,7 +70,7 @@ export default {
   skills: [
     {
       id: 1,
-      name: 'Angular',
+      name: 'TypeScript',
       rating: 80,
     },
     {
@@ -80,12 +80,12 @@ export default {
     },
     {
       id: 1,
-      name: 'MySql',
+      name: 'Nodejs',
       rating: 80,
     },
     {
       id: 1,
-      name: 'React Native',
+      name: 'MySQL',
       rating: 100,
     },
   ],

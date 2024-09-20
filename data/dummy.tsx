@@ -1,8 +1,8 @@
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  firstName: 'James',
-  lastName: 'Carter',
-  jobTitle: 'full stack developer',
+  firstName: 'Brain',
+  lastName: 'Ambani',
+  jobTitle: 'fullstack developer',
   address: '525 N tryon Street, NC 28117',
   phone: '(123)-456-7890',
   email: 'exmaple@gmail.com',

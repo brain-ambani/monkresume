@@ -1,8 +1,8 @@
-import { getResumeId } from '@/app/actions/createResumeAction';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ResumeInfoContext } from '@/context/ResumeInfoContext';
-import React, { useContext } from 'react';
+import { useParams } from 'next/navigation';
+import React, { use, useContext } from 'react';
 
 interface PersonalDetailProps {
   enableNext: (value: boolean) => void;
@@ -11,14 +11,10 @@ interface PersonalDetailProps {
 const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
   const { resumeInfo, setResumeInfo } = useContext<any>(ResumeInfoContext);
 
-  const fetchResumeId = async () => {
-    try {
-      const resumeId = await getResumeId();
-      console.log('Resume ID:', resumeId);
-    } catch (error) {
-      console.error('Error fetching resume ID:', error);
-    }
-  };
+  // Fetch the resume ID from the URL
+  const { resumeId } = useParams();
+  console.log('Resume ID:', resumeId);
+
   const handleInputChange = (e: {
     target: { name: string; value: string };
   }) => {
@@ -32,6 +28,7 @@ const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
   };
   const onSave = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+
     enableNext(true);
   };
 

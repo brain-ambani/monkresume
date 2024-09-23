@@ -1,30 +1,52 @@
-import { useContext } from 'react';
-
+import { getResumeId } from '@/app/actions/createResumeAction';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ResumeInfoContext } from '@/context/ResumeInfoContext';
-import { Button } from '@/components/ui/button';
-import { savePersonalDetails } from '@/app/actions/savePersonalDetails ';
+import React, { useContext } from 'react';
 
-export const PersonalDetail = () => {
-  //   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
+interface PersonalDetailProps {
+  enableNext: (value: boolean) => void;
+}
 
-  const handleInputChange = (e: any) => {
-    // setResumeInfo((prev: any) => ({
-    //   ...prev,
-    //   [e.target.name]: e.target.value,
-    // }));
+const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
+  const { resumeInfo, setResumeInfo } = useContext<any>(ResumeInfoContext);
+
+  const fetchResumeId = async () => {
+    try {
+      const resumeId = await getResumeId();
+      console.log('Resume ID:', resumeId);
+    } catch (error) {
+      console.error('Error fetching resume ID:', error);
+    }
   };
+  const handleInputChange = (e: {
+    target: { name: string; value: string };
+  }) => {
+    enableNext(false);
+    const { name, value } = e.target;
+
+    setResumeInfo({
+      ...resumeInfo,
+      [name]: value,
+    });
+  };
+  const onSave = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    enableNext(true);
+  };
+
   return (
-    <div className='p-5 shadow-lg rounded-lg border-t-violet-500 border-t-4 mt-10'>
+    <div className='p-5 shadow-md rounded-lg border-t-primary border-t-4 mt-10'>
       <h2 className='font-bold text-lg'>Personal Details</h2>
-      <p>Get Started with the basic information</p>
-      <form action={savePersonalDetails}>
+      <p>Get started with the basic information</p>
+      <form onSubmit={onSave}>
         <div className='grid grid-cols-2 mt-5 gap-3'>
           <div>
             <label className='text-sm'>First Name</label>
             <Input
               name='firstName'
               required
+              onChange={handleInputChange}
             />
           </div>
           <div>
@@ -32,6 +54,7 @@ export const PersonalDetail = () => {
             <Input
               name='lastName'
               required
+              onChange={handleInputChange}
             />
           </div>
           <div className='col-span-2'>
@@ -39,39 +62,40 @@ export const PersonalDetail = () => {
             <Input
               name='jobTitle'
               required
+              onChange={handleInputChange}
             />
           </div>
           <div className='col-span-2'>
-            <label className='text-sm'>Address</label>
+            <label className='text-sm'>Adress</label>
             <Input
               name='address'
               required
+              onChange={handleInputChange}
             />
           </div>
-          <div>
+          <div className=''>
             <label className='text-sm'>Phone</label>
             <Input
               name='phone'
               required
+              onChange={handleInputChange}
             />
           </div>
-          <div>
+          <div className=''>
             <label className='text-sm'>Email</label>
             <Input
               name='email'
               required
+              onChange={handleInputChange}
             />
           </div>
         </div>
         <div className='mt-3 flex justify-end'>
-          <Button
-            type='submit'
-            className='bg-violet-500'
-          >
-            Save
-          </Button>
+          <Button>Save</Button>
         </div>
       </form>
     </div>
   );
 };
+
+export default PersonalDetail;

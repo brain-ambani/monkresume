@@ -1,8 +1,9 @@
+import { updatePersonalDetails } from '@/app/actions/saveInfo';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ResumeInfoContext } from '@/context/ResumeInfoContext';
 import { useParams } from 'next/navigation';
-import React, { use, useContext } from 'react';
+import React, { useContext } from 'react';
 
 interface PersonalDetailProps {
   enableNext: (value: boolean) => void;
@@ -30,6 +31,22 @@ const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
     e.preventDefault();
 
     enableNext(true);
+
+    try {
+      // Call the server action to update the resume details
+      await updatePersonalDetails(resumeId, {
+        firstName: resumeInfo.firstName,
+        lastName: resumeInfo.lastName,
+        jobTitle: resumeInfo.jobTitle,
+        address: resumeInfo.address,
+        phone: resumeInfo.phone,
+        email: resumeInfo.email,
+      });
+
+      console.log('Resume updated successfully');
+    } catch (error) {
+      console.error('Failed to update resume', error);
+    }
   };
 
   return (

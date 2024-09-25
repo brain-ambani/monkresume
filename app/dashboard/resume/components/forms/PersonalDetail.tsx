@@ -13,7 +13,8 @@ const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
   const { resumeInfo, setResumeInfo } = useContext<any>(ResumeInfoContext);
 
   // Fetch the resume ID from the URL
-  const { resumeId } = useParams();
+  const params = useParams();
+  const resumeId = params?.resumeId;
   console.log('Resume ID:', resumeId);
 
   const handleInputChange = (e: {
@@ -30,9 +31,9 @@ const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
   const onSave = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    enableNext(true);
-
     try {
+      if (!resumeId) throw new Error('Resume ID not found');
+
       // Call the server action to update the resume details
       await updatePersonalDetails(resumeId, {
         firstName: resumeInfo.firstName,
@@ -43,6 +44,7 @@ const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
         email: resumeInfo.email,
       });
 
+      enableNext(true);
       console.log('Resume updated successfully');
     } catch (error) {
       console.error('Failed to update resume', error);
@@ -104,8 +106,8 @@ const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
             />
           </div>
         </div>
-        <div className='mt-3 flex justify-end'>
-          <Button>Save</Button>
+        <div className='mt-3 flex justify-end '>
+          <Button className='bg-violet-500'>Save</Button>
         </div>
       </form>
     </div>

@@ -35,14 +35,17 @@ const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
       if (!resumeId) throw new Error('Resume ID not found');
 
       // Call the server action to update the resume details
-      await updatePersonalDetails(resumeId, {
-        firstName: resumeInfo.firstName,
-        lastName: resumeInfo.lastName,
-        jobTitle: resumeInfo.jobTitle,
-        address: resumeInfo.address,
-        phone: resumeInfo.phone,
-        email: resumeInfo.email,
-      });
+      await updatePersonalDetails(
+        Array.isArray(resumeId) ? resumeId[0] : resumeId,
+        {
+          firstName: resumeInfo.firstName,
+          lastName: resumeInfo.lastName,
+          jobTitle: resumeInfo.jobTitle,
+          address: resumeInfo.address,
+          phone: resumeInfo.phone,
+          email: resumeInfo.email,
+        }
+      );
 
       enableNext(true);
       console.log('Resume updated successfully');

@@ -2,6 +2,8 @@ import { updatePersonalDetails } from '@/app/actions/saveInfo';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ResumeInfoContext } from '@/context/ResumeInfoContext';
+import { toast } from 'sonner';
+
 import { LoaderCircle } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import React, { useContext, useState } from 'react';
@@ -52,6 +54,8 @@ const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
 
       setLoading(false);
       enableNext(true);
+      toast('Personal details updated successfully');
+
       console.log('Resume updated successfully');
     } catch (error) {
       console.error('Failed to update resume', error);

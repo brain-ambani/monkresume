@@ -35,6 +35,7 @@ model Resume {
   address String?
   phone String?
   email String?
+  summary String?
   
 
   // Relation to user

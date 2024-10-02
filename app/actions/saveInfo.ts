@@ -32,3 +32,19 @@ export async function updatePersonalDetails(
     throw new Error('Failed to update resume');
   }
 }
+
+export async function updateSummary(resumeId: string, summary: string) {
+  try {
+    const updatedResume = await db.resume.update({
+      where: { resumeId: resumeId },
+      data: {
+        summary,
+      },
+    });
+
+    return updatedResume;
+  } catch (error) {
+    console.error('Failed to update resume:', error);
+    throw new Error('Failed to update resume');
+  }
+}

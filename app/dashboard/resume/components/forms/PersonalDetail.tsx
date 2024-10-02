@@ -72,6 +72,7 @@ const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
             <label className='text-sm'>First Name</label>
             <Input
               name='firstName'
+              defaultValue={resumeInfo?.firstName}
               required
               onChange={handleInputChange}
             />
@@ -80,6 +81,7 @@ const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
             <label className='text-sm'>Last Name</label>
             <Input
               name='lastName'
+              defaultValue={resumeInfo?.lastName}
               required
               onChange={handleInputChange}
             />
@@ -88,6 +90,7 @@ const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
             <label className='text-sm'>Job Title</label>
             <Input
               name='jobTitle'
+              defaultValue={resumeInfo?.jobTitle}
               required
               onChange={handleInputChange}
             />
@@ -96,6 +99,7 @@ const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
             <label className='text-sm'>Adress</label>
             <Input
               name='address'
+              defaultValue={resumeInfo?.address}
               required
               onChange={handleInputChange}
             />
@@ -104,6 +108,7 @@ const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
             <label className='text-sm'>Phone</label>
             <Input
               name='phone'
+              defaultValue={resumeInfo?.phone}
               required
               onChange={handleInputChange}
             />
@@ -112,6 +117,7 @@ const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
             <label className='text-sm'>Email</label>
             <Input
               name='email'
+              defaultValue={resumeInfo?.email}
               required
               onChange={handleInputChange}
             />

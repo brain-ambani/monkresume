@@ -2,8 +2,9 @@ import { updatePersonalDetails } from '@/app/actions/saveInfo';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ResumeInfoContext } from '@/context/ResumeInfoContext';
+import { LoaderCircle } from 'lucide-react';
 import { useParams } from 'next/navigation';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 interface PersonalDetailProps {
   enableNext: (value: boolean) => void;
@@ -11,6 +12,7 @@ interface PersonalDetailProps {
 
 const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
   const { resumeInfo, setResumeInfo } = useContext<any>(ResumeInfoContext);
+  const [loading, setLoading] = useState(false);
 
   // Fetch the resume ID from the URL
   const params = useParams();
@@ -30,6 +32,7 @@ const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
   };
   const onSave = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       if (!resumeId) throw new Error('Resume ID not found');
@@ -47,6 +50,7 @@ const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
         }
       );
 
+      setLoading(false);
       enableNext(true);
       console.log('Resume updated successfully');
     } catch (error) {
@@ -110,7 +114,12 @@ const PersonalDetail: React.FC<PersonalDetailProps> = ({ enableNext }) => {
           </div>
         </div>
         <div className='mt-3 flex justify-end '>
-          <Button className='bg-violet-500'>Save</Button>
+          <Button
+            className='bg-violet-500'
+            disabled={loading}
+          >
+            {loading ? <LoaderCircle className='animate-spin' /> : 'Save'}
+          </Button>
         </div>
       </form>
     </div>

@@ -1,18 +1,20 @@
 import { updateSummary } from '@/app/actions/saveInfo';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { ResumeInfoContext } from '@/context/ResumeInfoContext';
 import { toast } from 'sonner';
+import { Textarea } from '@/components/ui/textarea';
 
-import { LoaderCircle } from 'lucide-react';
+import { Brain, LoaderCircle } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import React, { useContext, useState } from 'react';
-import { Textarea } from '@/components/ui/textarea';
+import { AIChatSession } from '@/lib/aimodel';
 
 interface SummaryProps {
   enableNext: (value: boolean) => void;
 }
 
+const prompt =
+  'Job Title: {jobTtile}, Depends on the job title give me summary for my resume within 4-5 lines';
 const Summary: React.FC<SummaryProps> = ({ enableNext }) => {
   const { resumeInfo, setResumeInfo } = useContext<any>(ResumeInfoContext);
   const [loading, setLoading] = useState(false);
@@ -31,6 +33,16 @@ const Summary: React.FC<SummaryProps> = ({ enableNext }) => {
       summary: value, // Update the summary field in resumeInfo
     });
   };
+
+  const GenerateSummaryFromAI = async () => {
+    setLoading(true);
+    const PROMPT = prompt.replace('{jobTtile}', resumeInfo?.jobTitle);
+    console.log('Prompt:', PROMPT);
+    const result = await AIChatSession.sendMessage(PROMPT);
+    console.log(result.response.text());
+    setLoading(false);
+  };
+
   const onSave = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setLoading(true);
@@ -66,9 +78,12 @@ const Summary: React.FC<SummaryProps> = ({ enableNext }) => {
           <label>Add Summary</label>
           <Button
             variant='outline'
+            type='button'
             size='sm'
-            className='text-violet-500 border-violet-500'
+            onClick={() => GenerateSummaryFromAI()}
+            className='text-violet-500 border-violet-500 flex gap-2'
           >
+            <Brain className='w-4 h-4' />
             Generate from AI
           </Button>
         </div>
